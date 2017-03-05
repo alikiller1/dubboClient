@@ -1,6 +1,6 @@
 package per.liuqh.testdubbo;
 
-import java.util.List;
+import java.util.Date;
 
 import org.springframework.context.support.ClassPathXmlApplicationContext;  
   
@@ -10,24 +10,30 @@ public class Consumer {
         ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(  
                 new String[] { "dubbo-consumer.xml" });  
         context.start();  
-        System.out.println("消费都启动了");
+        System.out.println("consume-消费都启动了");
         try{
-        DemoService demoService = (DemoService) context.getBean("demoService"); //  
-        String hello = demoService.sayHello("tom"); // ִ  
-        System.out.println(hello); //   
+       final  DemoService demoService = (DemoService) context.getBean("demoService"); //  
+        for(int i=0;i<10;i++){
+        	new Thread(){
+        		@Override
+        		public void run() {
+        			String hello = demoService.sayHello("tom"); // ִ  
+                    System.out.println("consume--"+new Date()+"--"+hello); //   
+        		}
+        	}.start();;
+        }
+        
   
-        //   
-        List<User> list = demoService.getUsers();  
+          
+       /* List<User> list = demoService.getUsers();  
         if (list != null && list.size() > 0) {  
             for (int i = 0; i < list.size(); i++) {  
                 System.out.println(list.get(i));  
             }  
-        }  
+        }  */
         }catch(Exception e){
-        	System.out.println("--------------------------------adfsf");
         	e.printStackTrace();
         }
-        System.out.println("==============");  
         System.in.read();  
     }  
   
