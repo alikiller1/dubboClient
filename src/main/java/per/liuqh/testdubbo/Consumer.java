@@ -12,7 +12,7 @@ public class Consumer {
         context.start();  
         System.out.println("consume-消费都启动了");
         try{
-       final  DemoService demoService = (DemoService) context.getBean("demoService"); //  
+      final  DemoService demoService = (DemoService) context.getBean("demoService"); //  
         for(int i=0;i<10;i++){
         	new Thread(){
         		@Override
